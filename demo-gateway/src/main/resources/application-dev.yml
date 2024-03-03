@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: '*'
+            #允许请求中携带的头信息
+            allowedHeaders: '*'
+            #运行跨域的请求方式
+            allowedMethods: '*'
+            #跨域检测的有效期单位s
+            maxAge: 36000
+      routes:
+       - id: hello
+         uri: lb://demo-child1
+         predicates:
+         - Path=/**
+      enabled: true
+    nacos:
+      discovery:
+        server-addr: 192.168.10.26:8848
+  application:
+    name: demo-gateway
+server:
+  port: 8086
